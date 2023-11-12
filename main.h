@@ -12,9 +12,12 @@ int _printf(const char *format, ...);
 int _putchar(char c);
 int printStr(const char *str);
 int printInt(int number);
+int printBin(unsigned int number);
+int printUInt(unsigned int number);
+int printOct(unsigned int number);
+int printHex(unsigned int number, bool upper);
 int printInvalid(char c);
 
 char *convertBase(unsigned long number, int base, bool upper);
-int printBin(unsigned int number);
 
 #endif

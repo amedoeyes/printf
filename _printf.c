@@ -24,6 +24,15 @@ int handleSpecifier(char c, va_list ap)
 			return (printInt(va_arg(ap, int)));
 		case 'b':
 			return (printBin(va_arg(ap, unsigned int)));
+		case 'o':
+			return (printOct(va_arg(ap, unsigned int)));
+		case 'u':
+			return (printUInt(va_arg(ap, int)));
+		case 'x':
+			return (printHex(va_arg(ap, unsigned int), false));
+		case 'X':
+			return (printHex(va_arg(ap, unsigned int), true));
+			return (printHex(va_arg(ap, unsigned int), true));
 		default:
 			return (printInvalid(c));
 	}
