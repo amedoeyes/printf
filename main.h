@@ -12,5 +12,6 @@ int _printf(const char *format, ...);
 int _putchar(char c);
 int printStr(const char *str);
 int printInvalid(char c);
+int printInt(int number);
 
 #endif

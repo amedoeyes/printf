@@ -19,6 +19,9 @@ int handleSpecifier(char c, va_list ap)
 			return (printStr(va_arg(ap, char *)));
 		case '%':
 			return (_putchar('%'));
+		case 'd':
+		case 'i':
+			return (printInt(va_arg(ap, int)));
 		default:
 			return (printInvalid(c));
 	}
