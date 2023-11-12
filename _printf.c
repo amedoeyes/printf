@@ -1,24 +1,4 @@
 #include "main.h"
-#include <stdarg.h>
-#include <stddef.h>
-
-/**
- * handleInvalidSpecifier - handles invalid specifiers
- *
- * @c: specifier
- *
- * Return: number of bytes printed
- */
-
-int handleInvalidSpecifier(char c)
-{
-	int len = 0;
-
-	len += _putchar('%');
-	len += _putchar(c);
-
-	return (len);
-}
 
 /**
  * handleSpecifier - handles specifiers
@@ -40,7 +20,7 @@ int handleSpecifier(char c, va_list ap)
 		case '%':
 			return (_putchar('%'));
 		default:
-			return (handleInvalidSpecifier(c));
+			return (printInvalid(c));
 	}
 }
 
@@ -55,11 +35,14 @@ int handleSpecifier(char c, va_list ap)
 int _printf(const char *format, ...)
 {
 	va_list ap;
-	size_t len = 0;
+	int len = 0;
+
+	if (!format || (format[0] == '%' && !format[1]))
+		return (-1);
 
 	va_start(ap, format);
 
-	while (format && *format)
+	while (*format)
 	{
 		if (*format == '%')
 		{
@@ -69,14 +52,13 @@ int _printf(const char *format, ...)
 				break;
 
 			len += handleSpecifier(*format, ap);
-
-			format++;
 		}
 		else
 		{
 			len += _putchar(*format);
-			format++;
 		}
+
+		format++;
 	}
 
 	va_end(ap);
