@@ -22,6 +22,8 @@ int handleSpecifier(char c, va_list ap)
 		case 'd':
 		case 'i':
 			return (printInt(va_arg(ap, int)));
+		case 'b':
+			return (printBin(va_arg(ap, unsigned int)));
 		default:
 			return (printInvalid(c));
 	}
