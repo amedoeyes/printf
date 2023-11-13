@@ -24,4 +24,23 @@ int printInvalid(char c);
 
 char *convertBase(unsigned long number, int base, bool upper);
 
+/**
+ * struct Flags - struct to store flags state
+ *
+ * @hash: flag for hash
+ * @plus: flag for plus
+ * @space: flag for space
+ */
+
+struct Flags
+{
+	bool hash;
+	bool plus;
+	bool space;
+};
+
+struct Flags *initFlags(void);
+struct Flags *getFlags(void);
+void freeFlags(void);
+
 #endif

@@ -10,11 +10,13 @@
 
 int printAddr(void *address)
 {
-	char *buf = convertBase((unsigned long)address, 16, false);
+	char *buf;
 	int len = 0;
 
 	if (!address)
 		return (printStr("(nil)"));
+
+	buf = convertBase((unsigned long)address, 16, false);
 
 	len += printStr("0x");
 	len += printStr(buf);

@@ -11,9 +11,13 @@
 int printOct(unsigned int number)
 {
 	char *buf = convertBase(number, 8, false);
-	int len = strlen(buf);
+	int len = 0;
+	struct Flags *flags = getFlags();
 
-	printStr(buf);
+	if (flags->hash && buf[0] != '0')
+		len += printChar('0');
+
+	len += printStr(buf);
 
 	free(buf);
 

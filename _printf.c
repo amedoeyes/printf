@@ -1,6 +1,37 @@
 #include "main.h"
 
 /**
+ * handleFlags - handles flags
+ *
+ * @format: format pointer
+ */
+
+void handleFlags(const char **format)
+{
+	struct Flags *flags = getFlags();
+
+	while (**format)
+	{
+		switch (**format)
+		{
+			case '#':
+				flags->hash = true;
+				break;
+			case '+':
+				flags->plus = true;
+				break;
+			case ' ':
+				flags->space = true;
+				break;
+			default:
+				return;
+		}
+
+		(*format)++;
+	}
+}
+
+/**
  * handleSpecifiers - handles specifiers
  *
  * @c: specifier
@@ -36,6 +67,8 @@ int handleSpecifiers(char c, va_list ap)
 			return (printStrNP(va_arg(ap, char *)));
 		case 'p':
 			return (printAddr(va_arg(ap, void *)));
+		case '\0':
+			return (-1);
 		default:
 			return (printInvalid(c));
 	}
@@ -54,7 +87,7 @@ int _printf(const char *format, ...)
 	va_list ap;
 	int len = 0;
 
-	if (!format || (format[0] == '%' && !format[1]))
+	if (!format)
 		return (-1);
 
 	va_start(ap, format);
@@ -63,9 +96,20 @@ int _printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			format++;
+			int result;
 
-			len += handleSpecifiers(*format, ap);
+			format++;
+			initFlags();
+
+			handleFlags(&format);
+			result = handleSpecifiers(*format, ap);
+
+			if (result == -1)
+				return (-1);
+
+			len += result;
+
+			freeFlags();
 		}
 		else
 		{
