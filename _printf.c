@@ -32,7 +32,6 @@ int handleSpecifier(char c, va_list ap)
 			return (printHex(va_arg(ap, unsigned int), false));
 		case 'X':
 			return (printHex(va_arg(ap, unsigned int), true));
-			return (printHex(va_arg(ap, unsigned int), true));
 		default:
 			return (printInvalid(c));
 	}
