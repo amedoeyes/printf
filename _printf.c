@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * handleSpecifier - handles specifiers
+ * handleSpecifiers - handles specifiers
  *
  * @c: specifier
  * @ap: argument list
@@ -9,7 +9,7 @@
  * Return: number of bytes printed
  */
 
-int handleSpecifier(char c, va_list ap)
+int handleSpecifiers(char c, va_list ap)
 {
 	switch (c)
 	{
@@ -32,6 +32,8 @@ int handleSpecifier(char c, va_list ap)
 			return (printHex(va_arg(ap, unsigned int), false));
 		case 'X':
 			return (printHex(va_arg(ap, unsigned int), true));
+		case 'S':
+			return (printStrNP(va_arg(ap, char *)));
 		default:
 			return (printInvalid(c));
 	}
@@ -61,7 +63,7 @@ int _printf(const char *format, ...)
 		{
 			format++;
 
-			len += handleSpecifier(*format, ap);
+			len += handleSpecifiers(*format, ap);
 		}
 		else
 		{
