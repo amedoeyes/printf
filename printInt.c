@@ -15,7 +15,7 @@ int printInt(int number)
 	int len = 0;
 
 	if (number < 0)
-		len += _putchar('-');
+		len += printChar('-');
 
 	len += printStr(buf);
 

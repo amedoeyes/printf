@@ -25,7 +25,7 @@ char *convertBase(unsigned long number, int base, bool upper)
 		exit(1);
 
 	i = len - 1;
-	do {
+	do	{
 		buf[i--] = digits[number % base];
 		number /= base;
 	} while (number > 0);

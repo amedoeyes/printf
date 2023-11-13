@@ -14,11 +14,11 @@ int handleSpecifier(char c, va_list ap)
 	switch (c)
 	{
 		case 'c':
-			return (_putchar(va_arg(ap, int)));
+			return (printChar(va_arg(ap, int)));
 		case 's':
 			return (printStr(va_arg(ap, char *)));
 		case '%':
-			return (_putchar('%'));
+			return (printChar('%'));
 		case 'd':
 		case 'i':
 			return (printInt(va_arg(ap, int)));
@@ -61,20 +61,18 @@ int _printf(const char *format, ...)
 		{
 			format++;
 
-			if (!*format)
-				break;
-
 			len += handleSpecifier(*format, ap);
 		}
 		else
 		{
-			len += _putchar(*format);
+			len += printChar(*format);
 		}
 
 		format++;
 	}
 
 	va_end(ap);
+	flushBuf();
 
 	return (len);
 }

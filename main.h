@@ -9,7 +9,8 @@
 
 int _printf(const char *format, ...);
 
-int _putchar(char c);
+int printChar(char c);
+void flushBuf(void);
 int printStr(const char *str);
 int printInt(int number);
 int printBin(unsigned int number);
