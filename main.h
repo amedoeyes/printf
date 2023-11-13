@@ -19,6 +19,7 @@ int printUInt(unsigned int number);
 int printOct(unsigned int number);
 int printHex(unsigned int number, bool upper);
 int printStrNP(const char *str);
+int printAddr(void *address);
 int printInvalid(char c);
 
 char *convertBase(unsigned long number, int base, bool upper);

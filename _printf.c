@@ -34,6 +34,8 @@ int handleSpecifiers(char c, va_list ap)
 			return (printHex(va_arg(ap, unsigned int), true));
 		case 'S':
 			return (printStrNP(va_arg(ap, char *)));
+		case 'p':
+			return (printAddr(va_arg(ap, void *)));
 		default:
 			return (printInvalid(c));
 	}
