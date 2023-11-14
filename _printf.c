@@ -67,6 +67,8 @@ int handleSpecifiers(char c, va_list ap)
 			return (printStrNP(va_arg(ap, char *)));
 		case 'p':
 			return (printAddr(va_arg(ap, void *)));
+		case 'r':
+			return (printStrRev(va_arg(ap, char *)));
 		case '\0':
 			return (-1);
 		default:
