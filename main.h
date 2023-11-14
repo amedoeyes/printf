@@ -21,6 +21,7 @@ int printHex(unsigned int number, bool upper);
 int printStrNP(const char *str);
 int printAddr(void *address);
 int printStrRev(const char *str);
+int printStrRot13(const char *str);
 int printInvalid(char c);
 
 char *convertBase(unsigned long number, int base, bool upper);
