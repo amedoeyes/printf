@@ -12,8 +12,8 @@ int printInvalid(char c)
 {
 	int len = 0;
 
-	len += printChar('%');
-	len += printChar(c);
+	len += writeBuf('%');
+	len += writeBuf(c);
 
 	return (len);
 }

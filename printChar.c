@@ -1,32 +1,24 @@
-#include <unistd.h>
-
-static char buf[1024];
-static int i;
+#include "main.h"
 
 /**
- * flushBuf - prints the buffer
- */
-
-void flushBuf(void)
-{
-	write(1, buf, i);
-	i = 0;
-}
-
-/**
- * printChar - writes the character c to stdout
+ * printChar - prints a character
  *
  * @c: the character to print
  *
- * Return: 1 byte
+ * Return: number of bytes printed
  */
 
 int printChar(char c)
 {
-	if (i == 1024)
-		flushBuf();
+	int len = 0;
 
-	buf[i++] = c;
+	if (!getFlags()->minus)
+		len += printWidth(1);
 
-	return (1);
+	len += writeBuf(c);
+
+	if (getFlags()->minus)
+		len += printWidth(1);
+
+	return (len);
 }

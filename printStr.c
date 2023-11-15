@@ -10,16 +10,30 @@
 
 int printStr(const char *str)
 {
-	int len;
-	int i;
+	int len = 0;
+	int precision = getPrecision();
+	int i = 0;
 
 	if (!str)
 		str = "(null)";
 
-	len = strlen(str);
+	len = 0;
 
-	for (i = 0; i < len; i++)
-		printChar(str[i]);
+	if (!getFlags()->minus)
+		len += printWidth(strlen(str));
+
+	while (*str)
+	{
+		if (getFlags()->dot && i == precision)
+			break;
+
+		len += writeBuf(*str);
+		str++;
+		i++;
+	}
+
+	if (getFlags()->minus)
+		len += printWidth(len);
 
 	return (len);
 }

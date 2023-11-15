@@ -26,14 +26,14 @@ int printStrNP(const char *str)
 			len += printStr("\\x");
 
 			if (strlen(buf) == 1)
-				len += printChar('0');
+				len += writeBuf('0');
 
 			len += printStr(buf);
 			free(buf);
 		}
 		else
 		{
-			len += printChar(str[i]);
+			len += writeBuf(str[i]);
 		}
 	}
 

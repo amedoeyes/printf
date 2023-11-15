@@ -1,38 +1,7 @@
 #include "main.h"
 
 /**
- * handleFlags - handles flags
- *
- * @format: format pointer
- */
-
-void handleFlags(const char **format)
-{
-	struct Flags *flags = getFlags();
-
-	while (**format)
-	{
-		switch (**format)
-		{
-			case '#':
-				flags->hash = true;
-				break;
-			case '+':
-				flags->plus = true;
-				break;
-			case ' ':
-				flags->space = true;
-				break;
-			default:
-				return;
-		}
-
-		(*format)++;
-	}
-}
-
-/**
- * handleSpecifiers - handles specifiers
+ * handleLong - handles long specifier
  *
  * @c: specifier
  * @ap: argument list
@@ -40,16 +9,74 @@ void handleFlags(const char **format)
  * Return: number of bytes printed
  */
 
-int handleSpecifiers(char c, va_list ap)
+int handleLong(char c, va_list ap)
 {
 	switch (c)
+	{
+		case 'd':
+		case 'i':
+			return (printIntLong(va_arg(ap, long)));
+		case 'u':
+			return (printUIntLong(va_arg(ap, long)));
+		case 'o':
+			return (printOctLong(va_arg(ap, long)));
+		case 'x':
+			return (printHexLong(va_arg(ap, long), false));
+		case 'X':
+			return (printHexLong(va_arg(ap, long), true));
+		default:
+			return (printInvalid(c));
+	}
+}
+
+/**
+ * handleShort - handles short specifier
+ *
+ * @c: specifier
+ * @ap: argument list
+ *
+ * Return: number of bytes printed
+ */
+
+int handleShort(char c, va_list ap)
+{
+	switch (c)
+	{
+		case 'd':
+		case 'i':
+			return (printIntShort(va_arg(ap, int)));
+		case 'u':
+			return (printUIntShort(va_arg(ap, int)));
+		case 'o':
+			return (printOctShort(va_arg(ap, int)));
+		case 'x':
+			return (printHexShort(va_arg(ap, int), false));
+		case 'X':
+			return (printHexShort(va_arg(ap, int), true));
+		default:
+			return (printInvalid(c));
+	}
+}
+
+/**
+ * handleSpecifiers - handles specifiers
+ *
+ * @format: format pointer
+ * @ap: argument list
+ *
+ * Return: number of bytes printed
+ */
+
+int handleSpecifiers(const char **format, va_list ap)
+{
+	switch (**format)
 	{
 		case 'c':
 			return (printChar(va_arg(ap, int)));
 		case 's':
 			return (printStr(va_arg(ap, char *)));
 		case '%':
-			return (printChar('%'));
+			return (writeBuf('%'));
 		case 'd':
 		case 'i':
 			return (printInt(va_arg(ap, int)));
@@ -71,10 +98,14 @@ int handleSpecifiers(char c, va_list ap)
 			return (printStrRev(va_arg(ap, char *)));
 		case 'R':
 			return (printStrRot13(va_arg(ap, char *)));
+		case 'l':
+			return (handleLong(*(++(*format)), ap));
+		case 'h':
+			return (handleShort(*(++(*format)), ap));
 		case '\0':
 			return (-1);
 		default:
-			return (printInvalid(c));
+			return (printInvalid(**format));
 	}
 }
 
@@ -106,7 +137,9 @@ int _printf(const char *format, ...)
 			initFlags();
 
 			handleFlags(&format);
-			result = handleSpecifiers(*format, ap);
+			handleWidth(&format, &ap);
+			handlePrecision(&format, &ap);
+			result = handleSpecifiers(&format, ap);
 
 			if (result == -1)
 				return (-1);
@@ -116,9 +149,7 @@ int _printf(const char *format, ...)
 			freeFlags();
 		}
 		else
-		{
-			len += printChar(*format);
-		}
+			len += writeBuf(*format);
 
 		format++;
 	}

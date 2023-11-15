@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
-* printStrRot13 - prints string rot13 to the standard output
-*
-* @str: the string to print
-*
-* Return: number of bytes printed
-*/
+ * printStrRot13 - prints string rot13 to the standard output
+ *
+ * @str: the string to print
+ *
+ * Return: number of bytes printed
+ */
 
 int printStrRot13(const char *str)
 {
@@ -21,7 +21,7 @@ int printStrRot13(const char *str)
 
 		if (!isalpha(*str))
 		{
-			len += printChar(*str);
+			len += writeBuf(*str);
 			str++;
 			continue;
 		}
@@ -31,7 +31,7 @@ int printStrRot13(const char *str)
 		else
 			base = 'a';
 
-		len += printChar((*str - base + 13) % 26 + base);
+		len += writeBuf((*str - base + 13) % 26 + base);
 		str++;
 	}
 

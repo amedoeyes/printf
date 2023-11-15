@@ -1,20 +1,16 @@
 #include "main.h"
-#include <stdlib.h>
-#include <string.h>
-
-#include "main.h"
 
 /**
- * printBin - prints an binary number
+ * printUIntShort - prints a short unsigned integer
  *
- * @number: number to print
+ * @number: the integer to print
  *
  * Return: number of bytes printed
  */
 
-int printBin(unsigned int number)
+int printUIntShort(unsigned short number)
 {
-	char *buf = convertBase(number, 2, false);
+	char *buf = convertBase(number, 10, false);
 	int len = strlen(buf);
 	int precision = getPrecision();
 	int i;
@@ -26,19 +22,14 @@ int printBin(unsigned int number)
 		len += printWidth(precision);
 	else if (!getFlags()->minus)
 		len += printWidth((strlen(buf) - precision) + precision);
-
 	if (precision > 0)
 		len += printZeros(strlen(buf), precision);
 	else
 		len += printZeros(strlen(buf), getZeros());
-
 	for (i = 0; i < (int)strlen(buf); i++)
 		writeBuf(buf[i]);
-
 	if (getFlags()->minus)
 		len += printWidth(len);
-
 	free(buf);
-
 	return (len);
 }
